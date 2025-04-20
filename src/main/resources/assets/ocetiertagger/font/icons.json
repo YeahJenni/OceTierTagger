@@ -1,0 +1,89 @@
+{
+    "providers": [
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/sword.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE001"]
+      },
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/diamond_pot.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE002"]
+      },
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/netherite_pot.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE003"]
+      },
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/axe.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE004"]
+      },
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/uhc.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE005"]
+      },
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/smp.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE006"]
+      },
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/end_crystal_icon.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE007"]
+      },
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/chorus_fruit.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE008"]
+      },
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/tnt_minecart.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE009"]
+      },
+      {
+        "type": "bitmap",
+        "file": "ocetiertagger:font/mace.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE00A"]
+      },
+      {
+        "type": "bitmap",
+        "file": "minecraft:font/ascii.png", 
+        "ascent": 7,
+        "chars": [
+          "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+          "\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+          " !\"#$%&'()*+,-./",
+          "0123456789:;<=>?",
+          "@ABCDEFGHIJKLMNO",
+          "PQRSTUVWXYZ[\\]^_",
+          "`abcdefghijklmno",
+          "pqrstuvwxyz{|}~\u0000"
+        ]
+      }
+    ]
+  }
