@@ -1,4 +1,4 @@
-package com.kevin.tiertagger.model;
+package com.yeahjenni.ocetiertagger.model;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.kevin.tiertagger.mixin;
+package com.yeahjenni.ocetiertagger.mixin;
 
-import com.kevin.tiertagger.TierTagger;
+import com.yeahjenni.ocetiertagger.ocetiertagger;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.Version;
 import net.minecraft.client.MinecraftClient;
@@ -32,9 +32,9 @@ public class MixinTitleScreen extends Screen {
         if (hasCheckedVersion.get()) return;
 
         Version currentVersion = FabricLoader.getInstance().getModContainer("tier-tagger").map(m -> m.getMetadata().getVersion()).orElse(null);
-        Version latestVersion = TierTagger.getLatestVersion();
+        Version latestVersion = ocetiertagger.getLatestVersion();
 
-        if (TierTagger.isObsolete()) {
+        if (ocetiertagger.isObsolete()) {
             MinecraftClient.getInstance().setScreen(new ConfirmScreen(
                     b -> {
                         if (b) {
@@ -43,10 +43,10 @@ public class MixinTitleScreen extends Screen {
                             MinecraftClient.getInstance().setScreen(this);
                         }
                     },
-                    Text.translatable("tiertagger.obsolete.title"),
-                    Text.translatable("tiertagger.obsolete.desc"),
+                    Text.translatable("ocetiertagger.obsolete.title"),
+                    Text.translatable("ocetiertagger.obsolete.desc"),
                     Text.translatable("menu.quit"),
-                    Text.translatable("tiertagger.outdated.ignore")
+                    Text.translatable("ocetiertagger.outdated.ignore")
             ));
         } else if (currentVersion != null && latestVersion != null && currentVersion.compareTo(latestVersion) < 0) {
             Text newVersion = Text.literal(latestVersion.getFriendlyString()).formatted(Formatting.GREEN);
@@ -60,10 +60,10 @@ public class MixinTitleScreen extends Screen {
 
                         MinecraftClient.getInstance().setScreen(this);
                     },
-                    Text.translatable("tiertagger.outdated.title"),
-                    Text.translatable("tiertagger.outdated.desc", newVersion),
-                    Text.translatable("tiertagger.outdated.download"),
-                    Text.translatable("tiertagger.outdated.ignore")
+                    Text.translatable("ocetiertagger.outdated.title"),
+                    Text.translatable("ocetiertagger.outdated.desc", newVersion),
+                    Text.translatable("ocetiertagger.outdated.download"),
+                    Text.translatable("ocetiertagger.outdated.ignore")
             ));
         }
 

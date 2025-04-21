@@ -1,7 +1,7 @@
-package com.kevin.tiertagger.model;
+package com.yeahjenni.ocetiertagger.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.kevin.tiertagger.TierTagger;
+import com.yeahjenni.ocetiertagger.ocetiertagger;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.URI;
@@ -19,9 +19,9 @@ public record PlayerList(List<PlayerInfo> players, List<UUID> unknown, @Serializ
 
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
-                .thenApply(s -> TierTagger.GSON.fromJson(s, PlayerList.class))
+                .thenApply(s -> ocetiertagger.GSON.fromJson(s, PlayerList.class))
                 .whenComplete((i, t) -> {
-                    if (t != null) TierTagger.getLogger().warn("Error fetching tier list", t);
+                    if (t != null) ocetiertagger.getLogger().warn("Error fetching tier list", t);
                 });
     }
 }

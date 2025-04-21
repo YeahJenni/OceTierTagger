@@ -1,4 +1,4 @@
-package com.kevin.tiertagger.config;
+package com.yeahjenni.ocetiertagger.config;
 
 import java.io.Serializable;
 

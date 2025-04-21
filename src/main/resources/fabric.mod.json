@@ -12,15 +12,15 @@
   "icon": "assets/ocetiertagger/icon.png",
   "environment": "client",
   "entrypoints": {
-    "main": [
-      "com.kevin.tiertagger.TierTagger"
+    "client": [
+      "com.yeahjenni.ocetiertagger.ocetiertagger"
     ],
     "ukulib": [
-      "com.kevin.tiertagger.config.UkulibIntegration"
+      "com.yeahjenni.ocetiertagger.config.UkulibIntegration"
     ]
   },
   "mixins": [
-    "TierTagger.mixins.json"
+    "ocetiertagger.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.16",

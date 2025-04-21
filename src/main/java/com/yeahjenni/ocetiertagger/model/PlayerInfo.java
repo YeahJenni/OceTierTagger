@@ -1,6 +1,6 @@
-package com.kevin.tiertagger.model;
+package com.yeahjenni.ocetiertagger.model;
 
-import com.kevin.tiertagger.TierCache;
+import com.yeahjenni.ocetiertagger.TierCache;
 import lombok.Value;
 
 import java.util.ArrayList;
@@ -17,6 +17,24 @@ public class PlayerInfo {
     int points;
     int rank;
     Map<String, Ranking> rankings;
+
+    public PlayerInfo(String name, Map<String, Ranking> rankings) {
+        this.name = name;
+        this.id = ""; 
+        this.region = "OCE";  
+        this.points = 0;
+        this.rank = 0;
+        this.rankings = rankings;
+    }
+
+    public PlayerInfo(String name, String id, String region, int points, int rank, Map<String, Ranking> rankings) {
+        this.name = name;
+        this.id = id;
+        this.region = region;
+        this.points = points;
+        this.rank = rank;
+        this.rankings = rankings;
+    }
 
     public String getName() { return name; }
     public String getId() { return id; }

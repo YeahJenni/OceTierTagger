@@ -1,9 +1,9 @@
-package com.kevin.tiertagger;
+package com.yeahjenni.ocetiertagger;
 
-import com.kevin.tiertagger.model.GameMode;
-import com.kevin.tiertagger.model.OCETierPlayer;
-import com.kevin.tiertagger.model.OCETierPlayer.GameModeTier;
-import com.kevin.tiertagger.model.PlayerInfo;
+import com.yeahjenni.ocetiertagger.model.GameMode;
+import com.yeahjenni.ocetiertagger.model.OCETierPlayer;
+import com.yeahjenni.ocetiertagger.model.OCETierPlayer.GameModeTier;
+import com.yeahjenni.ocetiertagger.model.PlayerInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.client.MinecraftClient;
@@ -96,7 +96,7 @@ public class TierCache {
             .thenApply(response -> {
                 if (response.statusCode() == 200) {
                     String responseBody = response.body();
-                    TierTagger.getLogger().info("API Response for {}: {}", username, responseBody); 
+                    ocetiertagger.getLogger().info("API Response for {}: {}", username, responseBody); 
 
                     OCETierPlayer player = GSON.fromJson(responseBody, OCETierPlayer.class);
                     USERNAME_CACHE.put(lowerUsername, player);

@@ -1,6 +1,6 @@
-package com.kevin.tiertagger.config;
+package com.yeahjenni.ocetiertagger.config;
 
-import com.kevin.tiertagger.TierCache;
+import com.yeahjenni.ocetiertagger.TierCache;
 import com.google.gson.internal.LinkedTreeMap;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,11 +18,59 @@ public class TierTaggerConfig implements Serializable, IConfig {
     private int retiredColor = 0xa2d6ff;
     private LinkedTreeMap<String, Integer> tierColors = defaultColors();
     
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getGameMode() {
         if (!TierCache.GAME_MODES.contains(this.gameMode)) {
             this.gameMode = "crystal"; 
         }
         return this.gameMode;
+    }
+    
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
+    }
+    
+    public boolean isShowRetired() {
+        return showRetired;
+    }
+    
+    public void setShowRetired(Boolean showRetired) {
+        this.showRetired = showRetired;
+    }
+    
+    public Statistic getShownStatistic() {
+        return shownStatistic;
+    }
+    
+    public void setShownStatistic(Statistic statistic) {
+        this.shownStatistic = statistic;
+    }
+    
+    public NametagPosition getNametagPosition() {
+        return nametagPosition;
+    }
+    
+    public void setNametagPosition(NametagPosition position) {
+        this.nametagPosition = position;
+    }
+    
+    public int getRetiredColor() {
+        return retiredColor;
+    }
+    
+    public void setRetiredColor(int color) {
+        this.retiredColor = color;
+    }
+    
+    public LinkedTreeMap<String, Integer> getTierColors() {
+        return tierColors;
     }
     
     private static LinkedTreeMap<String, Integer> defaultColors() {
@@ -43,7 +91,7 @@ public class TierTaggerConfig implements Serializable, IConfig {
     }
     
     public enum Statistic {
-        TIER,    
+        TIER    
     }
     
     public enum NametagPosition {

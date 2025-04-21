@@ -1,4 +1,4 @@
-package com.kevin.tiertagger.model;
+package com.yeahjenni.ocetiertagger.model;
 
 public record GameMode(String id, String title) {
     public String getId() { return id; }

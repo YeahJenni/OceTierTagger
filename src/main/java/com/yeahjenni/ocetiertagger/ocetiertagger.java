@@ -1,16 +1,17 @@
-package com.kevin.tiertagger;
+package com.yeahjenni.ocetiertagger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.kevin.tiertagger.config.TierTaggerConfig;
-import com.kevin.tiertagger.model.GameMode;
-import com.kevin.tiertagger.model.PlayerInfo;
-import com.kevin.tiertagger.model.OCETierPlayer;
+import com.yeahjenni.ocetiertagger.config.TierTaggerConfig;
+import com.yeahjenni.ocetiertagger.config.UkulibIntegration;
+import com.yeahjenni.ocetiertagger.model.GameMode;
+import com.yeahjenni.ocetiertagger.model.PlayerInfo;
+import com.yeahjenni.ocetiertagger.model.OCETierPlayer;
+import com.yeahjenni.ocetiertagger.TierCache;
 import com.mojang.brigadier.context.CommandContext;
-import lombok.Getter;
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -51,42 +52,40 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
-public class TierTagger implements ModInitializer {
+public class ocetiertagger implements ClientModInitializer {
     public static final String MOD_ID = "ocetiertagger";
     private static final String UPDATE_URL_FORMAT = "https://api.modrinth.com/v2/project/yoB88RtH/version?game_versions=%s";
 
     public static final Gson GSON = new GsonBuilder().create();
 
-    @Getter
-    private static final ConfigManager<TierTaggerConfig> manager = ConfigManager.createDefault(TierTaggerConfig.class, MOD_ID);
-    @Getter
-    private static final Logger logger = LoggerFactory.getLogger(TierTagger.class);
-    @Getter
+    private static final ConfigManager<TierTaggerConfig> manager = 
+        ConfigManager.createDefault(TierTaggerConfig.class, MOD_ID);
+
+    private static final Logger logger = LoggerFactory.getLogger(MOD_ID);
+    private static Version latestVersion = null;
     private static final HttpClient client = HttpClient.newHttpClient();
 
     // === version checker stuff ===
-    @Getter
-    private static Version latestVersion = null;
     private static final AtomicBoolean isObsolete = new AtomicBoolean(false);
 
     private static int tickCounter = 0;
 
     @Override
-    public void onInitialize() {
+    public void onInitializeClient() {
         TierCache.clearCache();
 
         net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents.CLIENT_STOPPING.register(client -> {
             TierCache.clearCache();
-            logger.info("TierTagger cache cleared on game exit");
+            logger.info("ocetiertagger cache cleared on game exit");
         });
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registry) -> dispatcher.register(
                 literal(MOD_ID)
                         .then(argument("player", PlayerArgumentType.player())
-                                .executes(TierTagger::displayTierInfo))));
+                                .executes(ocetiertagger::displayTierInfo))));
 
         KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(
-            new KeyBinding("tiertagger.keybind.gamemode", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "tiertagger.name")
+            new KeyBinding("ocetiertagger.keybind.gamemode", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "ocetiertagger.name")
         );
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -186,7 +185,7 @@ public class TierTagger implements ModInitializer {
         if (playerInfo.isPresent()) {
             ctx.getSource().sendFeedback(printPlayerInfo(playerInfo.get()));
         } else {
-            ctx.getSource().sendFeedback(Text.of("[TierTagger] Searching..."));
+            ctx.getSource().sendFeedback(Text.of("[ocetiertagger] Searching..."));
             TierCache.searchPlayer(selector.name())
                     .thenAccept(p -> ctx.getSource().sendFeedback(printPlayerInfo(p)))
                     .exceptionally(t -> {
@@ -277,5 +276,17 @@ public class TierTagger implements ModInitializer {
                 Text.literal("Game mode switched!"),
                 Text.literal("Now showing ").append(Text.literal(displayName).formatted(Formatting.GOLD)).append(" tiers.")
         );
+    }
+
+    public static ConfigManager<TierTaggerConfig> getManager() {
+        return manager;
+    }
+
+    public static Version getLatestVersion() {
+        return latestVersion;
+    }
+
+    public static Logger getLogger() {
+        return logger;
     }
 }

@@ -1,4 +1,4 @@
-package com.kevin.tiertagger;
+package com.yeahjenni.ocetiertagger;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;

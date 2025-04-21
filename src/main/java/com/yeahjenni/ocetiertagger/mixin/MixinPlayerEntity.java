@@ -1,7 +1,7 @@
-package com.kevin.tiertagger.mixin;
+package com.yeahjenni.ocetiertagger.mixin;
 
-import com.kevin.tiertagger.TierTagger;
-import com.kevin.tiertagger.TierCache;
+import com.yeahjenni.ocetiertagger.ocetiertagger;
+import com.yeahjenni.ocetiertagger.TierCache;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
@@ -23,11 +23,11 @@ public abstract class MixinPlayerEntity {
         boolean isLocalPlayer = player.equals(client.player);
 
         if (isLocalPlayer) {
-            String gameMode = TierTagger.getManager().getConfig().getGameMode();
+            String gameMode = ocetiertagger.getManager().getConfig().getGameMode();
             String username = player.getName().getString();
             TierCache.getPlayerTier(username, gameMode);
         }
 
-        cir.setReturnValue(TierTagger.appendTier(player, cir.getReturnValue()));
+        cir.setReturnValue(ocetiertagger.appendTier(player, cir.getReturnValue()));
     }
 }

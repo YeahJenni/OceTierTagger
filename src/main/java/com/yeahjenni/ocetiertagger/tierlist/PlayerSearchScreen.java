@@ -1,5 +1,6 @@
-package com.kevin.tiertagger.tierlist;
+package com.yeahjenni.ocetiertagger.tierlist;
 
+import com.yeahjenni.ocetiertagger.tierlist.PlayerInfoScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -20,12 +21,12 @@ public class PlayerSearchScreen extends CloseableScreen {
 
     @Override
     protected void init() {
-        String username = I18n.translate("tiertagger.search.user");
+        String username = I18n.translate("ocetiertagger.search.user");
         this.textField = this.addSelectableChild(new TextInputWidget(this.width / 2 - 100, 116, 200, 20,
                 "", s -> {}, username, s -> s.matches("[a-zA-Z0-9_-]+"), 32));
 
         this.searchButton = this.addDrawableChild(
-                ButtonWidget.builder(Text.translatable("tiertagger.search"), button -> this.tryShowProfile())
+                ButtonWidget.builder(Text.translatable("ocetiertagger.search"), button -> this.tryShowProfile())
                         .dimensions(this.width / 2 - 100, this.height / 4 + 96 + 12, 200, 20)
                         .build()
         );

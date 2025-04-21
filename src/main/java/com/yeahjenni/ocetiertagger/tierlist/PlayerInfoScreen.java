@@ -1,9 +1,9 @@
-package com.kevin.tiertagger.tierlist;
+package com.yeahjenni.ocetiertagger.tierlist;
 
-import com.kevin.tiertagger.TierCache;
-import com.kevin.tiertagger.TierTagger;
-import com.kevin.tiertagger.model.GameMode;
-import com.kevin.tiertagger.model.PlayerInfo;
+import com.yeahjenni.ocetiertagger.TierCache;
+import com.yeahjenni.ocetiertagger.ocetiertagger;
+import com.yeahjenni.ocetiertagger.model.GameMode;
+import com.yeahjenni.ocetiertagger.model.PlayerInfo;
 import lombok.Setter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -113,7 +113,7 @@ public class PlayerInfoScreen extends CloseableScreen {
 
     private CompletableFuture<Identifier> fetchTexture(String user) {
         String username = user.toLowerCase();
-        Identifier tex = Identifier.of(TierTagger.MOD_ID, "player_" + username);
+        Identifier tex = Identifier.of(ocetiertagger.MOD_ID, "player_" + username);
         
         if (Ukutils.textureExists(tex)) return CompletableFuture.completedFuture(tex);
 
@@ -126,10 +126,10 @@ public class PlayerInfoScreen extends CloseableScreen {
                     NativeImage image = NativeImage.read(r.body());
                     texManager.registerTexture(tex, new NativeImageBackedTexture(image));
                 } catch (IOException e) {
-                    TierTagger.getLogger().error("Failed to register head texture", e);
+                    ocetiertagger.getLogger().error("Failed to register head texture", e);
                 }
             } else {
-                TierTagger.getLogger().error("Could not fetch head texture: {} {}", r.statusCode(), new String(r.body()));
+                ocetiertagger.getLogger().error("Could not fetch head texture: {} {}", r.statusCode(), new String(r.body()));
             }
 
             return tex;
@@ -158,7 +158,7 @@ public class PlayerInfoScreen extends CloseableScreen {
         if (retired) text.append("R");
         text.append(pos == 0 ? "H" : "L").append("T").append(tier);
 
-        int color = TierTagger.getTierColor(text.toString());
+        int color = ocetiertagger.getTierColor(text.toString());
         return Text.literal(text.toString()).styled(s -> s.withColor(color));
     }
 
@@ -223,5 +223,13 @@ public class PlayerInfoScreen extends CloseableScreen {
             Text tooltipText = Text.literal("Attained: " + date + "\nPoints: " +
                     points(namedRanking.getRanking())).formatted(Formatting.GRAY);
         }
+    }
+
+    private void setTexture(Identifier texture) {
+        this.texture = texture;
+    }
+
+    private void setInfo(PlayerInfo info) {
+        this.info = info;
     }
 }
