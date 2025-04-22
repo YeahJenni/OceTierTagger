@@ -157,11 +157,12 @@ public class TierCache {
             if (player.gameModes() != null) {
                 player.gameModes().forEach((mode, tierData) -> {
                     if (tierData.tier() != null) {
+                        // Fixed: Set retired to false
                         rankings.put(mode, new PlayerInfo.Ranking(
                             tierData.tier(),
                             Instant.now().getEpochSecond(), 
-                            0, 
-                            tierData.isLT()
+                            tierData.isLT() ? 1 : 0, 
+                            false 
                         ));
                     }
                 });

@@ -205,8 +205,19 @@ public class ocetiertagger implements ClientModInitializer {
             GameMode mode = TierCache.findMode(m);
             String tier = getTierText(r);
 
+            String iconChar = TierCache.GAMEMODE_ICON_CHARS.getOrDefault(m, "");
+            
+            MutableText iconText = Text.literal(iconChar)
+                .styled(s -> s.withFont(new Identifier("ocetiertagger", "icons")));
+            
             Text tierText = Text.literal(tier).styled(s -> s.withColor(getTierColor(tier)));
-            text.append(Text.literal("\n").append(mode.getTitle()).append(": ").append(tierText));
+            
+            text.append(Text.literal("\n"))
+                .append(iconText)
+                .append(" ")
+                .append(mode.getTitle())
+                .append(": ")
+                .append(tierText);
         });
 
         return text;
@@ -216,9 +227,9 @@ public class ocetiertagger implements ClientModInitializer {
     public static String getTierText(PlayerInfo.Ranking ranking) {
         if (manager.getConfig().isShowRetired() && ranking.isRetired() && 
             ranking.getPeakTier() != null && ranking.getPeakPos() > -1) {
-            return "R" + (ranking.getPeakPos() == 0 ? "H" : "L") + "T" + ranking.getPeakTier();
+            return "R" + ranking.getPeakTier(); 
         } else {
-            return (ranking.getPos() == 0 ? "H" : "L") + "T" + ranking.getTier();
+            return ranking.getTier(); 
         }
     }
 
