@@ -13,6 +13,7 @@ public class TierTaggerConfig implements Serializable, IConfig {
     private boolean enabled = true;
     private String gameMode = "crystal"; 
     private boolean showRetired = true;
+    private boolean showHighestTier = false; // New setting
     private Statistic shownStatistic = Statistic.TIER;
     private NametagPosition nametagPosition = NametagPosition.LEFT;
     private int retiredColor = 0xa2d6ff;
@@ -43,6 +44,14 @@ public class TierTaggerConfig implements Serializable, IConfig {
     
     public void setShowRetired(Boolean showRetired) {
         this.showRetired = showRetired;
+    }
+    
+    public boolean isShowHighestTier() {
+        return showHighestTier;
+    }
+    
+    public void setShowHighestTier(boolean showHighestTier) {
+        this.showHighestTier = showHighestTier;
     }
     
     public Statistic getShownStatistic() {
