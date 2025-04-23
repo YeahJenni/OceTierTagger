@@ -208,7 +208,7 @@ public class ocetiertagger implements ClientModInitializer {
             String iconChar = TierCache.GAMEMODE_ICON_CHARS.getOrDefault(m, "");
             
             MutableText iconText = Text.literal(iconChar)
-                .styled(s -> s.withFont(new Identifier("ocetiertagger", "icons")));
+                .styled(s -> s.withFont(Identifier.of("ocetiertagger", "icons")));
             
             Text tierText = Text.literal(tier).styled(s -> s.withColor(getTierColor(tier)));
             
