@@ -94,7 +94,9 @@ public class PlayerInfo {
         public String getTier() { return tier; }
         public long getAttained() { return attained; }
         public int getPosition() { return position; }
-        public boolean isRetired() { return retired; }
+        public boolean isRetired() { 
+            return tier != null && tier.startsWith("R"); 
+        }
 
         public int pos() { return position; }
         public int getPos() { return position; }

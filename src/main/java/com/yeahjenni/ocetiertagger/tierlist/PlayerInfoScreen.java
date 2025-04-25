@@ -170,7 +170,7 @@ public class PlayerInfoScreen extends CloseableScreen {
 
     private MutableText getTierText(String tier, int pos, boolean retired) {
         StringBuilder text = new StringBuilder();
-        if (retired) text.append("R");
+        if (tier != null && tier.startsWith("R")) text.append("R"); 
         text.append(pos == 0 ? "H" : "L").append("T").append(tier);
 
         int color = ocetiertagger.getTierColor(text.toString());
