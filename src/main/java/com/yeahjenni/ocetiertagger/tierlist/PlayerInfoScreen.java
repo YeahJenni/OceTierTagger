@@ -92,7 +92,22 @@ public class PlayerInfoScreen extends CloseableScreen {
         super.render(context, mouseX, mouseY, delta);
 
         String name = this.info == null ? this.player : this.info.getName();
-        context.drawCenteredTextWithShadow(this.textRenderer, name + "'s profile", this.width / 2, 20, 0xFFFFFF);
+        
+        boolean isOceaniasStaff = false;
+        if (this.info != null) {
+            isOceaniasStaff = this.info.isOceaniasStaff();
+        }
+        
+        MutableText nameText = Text.literal(name + "'s profile");
+        
+        if (isOceaniasStaff) {
+            nameText = Text.literal(TierCache.OCEANIAS_STAFF_ICON)
+                .styled(s -> s.withColor(0xBF00FF))
+                .append(" ")
+                .append(nameText);
+        }
+        
+        context.drawCenteredTextWithShadow(this.textRenderer, nameText, this.width / 2, 20, 0xFFFFFF);
 
         if (this.texture != null && this.info != null) {
             context.drawTexture(texture, this.width / 2 - 65, (this.height - 144) / 2, 0, 0, 60, 144, 60, 144);

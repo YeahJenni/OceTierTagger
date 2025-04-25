@@ -13,8 +13,9 @@ public class TierTaggerConfig implements Serializable, IConfig {
     private boolean enabled = true;
     private String gameMode = "crystal"; 
     private boolean showRetired = true;
-    private boolean showHighestTier = false; // New setting
+    private boolean showHighestTier = false; 
     private Statistic shownStatistic = Statistic.TIER;
+    private boolean showBestTierFirst = false;
     private NametagPosition nametagPosition = NametagPosition.LEFT;
     private int retiredColor = 0xa2d6ff;
     private LinkedTreeMap<String, Integer> tierColors = defaultColors();

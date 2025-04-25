@@ -9,6 +9,7 @@ import com.yeahjenni.ocetiertagger.config.UkulibIntegration;
 import com.yeahjenni.ocetiertagger.model.GameMode;
 import com.yeahjenni.ocetiertagger.model.PlayerInfo;
 import com.yeahjenni.ocetiertagger.model.OCETierPlayer;
+import com.yeahjenni.ocetiertagger.TierCache.TierInfo;
 import com.yeahjenni.ocetiertagger.TierCache;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.api.ClientModInitializer;
@@ -120,41 +121,63 @@ public class ocetiertagger implements ClientModInitializer {
             return text;
         }
 
-        String gameMode = manager.getConfig().getGameMode();
         String username = player.getName().getString();
-
-        String tier = TierCache.getCachedTier(username, gameMode);
-        if (tier != null) {
-            int color = getTierColor(tier);
-            String iconChar = TierCache.GAMEMODE_ICON_CHARS.getOrDefault(gameMode, "");
+        String gameMode;
+        String tier;
+        
+        if (manager.getConfig().isShowBestTierFirst()) {
+            TierInfo bestTier = TierCache.getBestTier(username);
+            if (bestTier == null) return text;
             
-            MutableText iconText = Text.literal(iconChar)
-                .styled(s -> s.withFont(Identifier.of("ocetiertagger", "icons")));
-                
-            MutableText tierText = Text.literal(tier)
-                .styled(style -> style.withColor(color));
-            
-            MutableText divider = Text.literal(" | ");
-            MutableText space = Text.literal(" ");
-            
-            if (manager.getConfig().getNametagPosition() == TierTaggerConfig.NametagPosition.LEFT) {
-                return Text.empty()
-                    .append(iconText)
-                    .append(space)
-                    .append(tierText)
-                    .append(divider)
-                    .append(text);
-            } else {
-                return Text.empty()
-                    .append(text)
-                    .append(divider)
-                    .append(tierText)
-                    .append(space)
-                    .append(iconText);
-            }
+            gameMode = bestTier.getGameMode();
+            tier = bestTier.getTier();
+        } else {
+            gameMode = manager.getConfig().getGameMode();
+            tier = TierCache.getCachedTier(username, gameMode);
+            if (tier == null) return text;
         }
 
-        return text;
+        OCETierPlayer playerData = TierCache.getPlayerData(username);
+        boolean isOceaniasStaff = playerData != null && playerData.oceaniasStaff();
+
+        int color = getTierColor(tier);
+        String iconChar = TierCache.GAMEMODE_ICON_CHARS.getOrDefault(gameMode, "");
+        
+        MutableText iconText = Text.empty().append(
+            Text.literal(iconChar).styled(s -> s.withFont(Identifier.of("ocetiertagger", "icons")))
+        );
+        
+        MutableText tierText = Text.literal(tier)
+            .styled(style -> style.withColor(color));
+        
+        MutableText divider = Text.literal(" | ");
+        MutableText space = Text.literal(" ");
+        
+        MutableText staffIcon = Text.empty();
+        if (isOceaniasStaff) {
+            staffIcon = Text.empty().append(
+                Text.literal(TierCache.OCEANIAS_STAFF_ICON)
+                    .styled(s -> s.withColor(0xBF00FF))
+            );
+        }
+        
+        if (manager.getConfig().getNametagPosition() == TierTaggerConfig.NametagPosition.LEFT) {
+            return Text.empty()
+                .append(isOceaniasStaff ? staffIcon.append(space) : Text.empty())
+                .append(iconText)
+                .append(space)
+                .append(tierText)
+                .append(divider)
+                .append(text);
+        } else {
+            return Text.empty()
+                .append(text)
+                .append(divider)
+                .append(tierText)
+                .append(space)
+                .append(iconText)
+                .append(isOceaniasStaff ? space.copy().append(staffIcon) : Text.empty());
+        }
     }
 
     public static int getTierColor(String tier) {
@@ -176,7 +199,7 @@ public class ocetiertagger implements ClientModInitializer {
                         PlayerEntity player = client.world.getPlayerByUuid(uuid);
                         String username = player.getName().getString();
 
-                        return TierCache.getPlayerInfo(username).get(200, TimeUnit.MILLISECONDS); // Pass the username
+                        return TierCache.getPlayerInfo(username).get(200, TimeUnit.MILLISECONDS); 
                     } catch (Exception e) {
                         return null;
                     }

@@ -31,7 +31,7 @@ public class TierCache {
     private static final Map<String, CompletableFuture<OCETierPlayer>> PENDING_REQUESTS = new ConcurrentHashMap<>();
 
     private static final OCETierPlayer NOT_FOUND_PLACEHOLDER = new OCETierPlayer(
-        "not-found", "not-found", 0, 0, "", Collections.emptyMap()
+        "not-found", "not-found", 0, 0, "", Collections.emptyMap(), false
     );
 
     public static final List<String> GAME_MODES = Arrays.asList(
@@ -65,6 +65,8 @@ public class TierCache {
             entry("cart", "\uE009"),        
             entry("mace", "\uE00A")          
     );
+
+    public static final String OCEANIAS_STAFF_ICON = "\u2604"; 
 
     /**
      * Fetch player data from the API by username
@@ -152,12 +154,10 @@ public class TierCache {
         return fetchPlayerByUsername(username).thenApply(player -> {
             if (player == null || player == NOT_FOUND_PLACEHOLDER) return null;
 
-            // Convert OCETierPlayer to PlayerInfo
             Map<String, PlayerInfo.Ranking> rankings = new HashMap<>();
             if (player.gameModes() != null) {
                 player.gameModes().forEach((mode, tierData) -> {
                     if (tierData.tier() != null) {
-                        // Fixed: Set retired to false
                         rankings.put(mode, new PlayerInfo.Ranking(
                             tierData.tier(),
                             Instant.now().getEpochSecond(), 
@@ -174,7 +174,8 @@ public class TierCache {
                 "OCE",
                 player.score(),
                 player.leaderboardPosition(),
-                rankings
+                rankings,
+                player.oceaniasStaff() 
             );
         });
     }
@@ -217,5 +218,96 @@ public class TierCache {
      */
     public static String getGameModeDisplay(String gameMode) {
         return GAME_MODE_DISPLAY.getOrDefault(gameMode, gameMode);
+    }
+
+    public static class TierInfo {
+        private final String gameMode;
+        private final String tier;
+        
+        public TierInfo(String gameMode, String tier) {
+            this.gameMode = gameMode;
+            this.tier = tier;
+        }
+        
+        public String getGameMode() {
+            return gameMode;
+        }
+        
+        public String getTier() {
+            return tier;
+        }
+    }
+
+    /**
+     * Helper method to determine tier value (higher = better)
+     */
+    public static int getTierValue(String tier) {
+        if (tier == null) return -1;
+        
+        switch (tier) {
+            case "HT1": return 10;
+            case "LT1": return 9;
+            case "HT2": return 8;
+            case "LT2": return 7;
+            case "HT3": return 6;
+            case "LT3": return 5;
+            case "HT4": return 4;
+            case "LT4": return 3;
+            case "HT5": return 2;
+            case "LT5": return 1;
+            case "RHT1": return 10; 
+            case "RLT1": return 9;
+            case "RHT2": return 8;
+            case "RLT2": return 7;
+            case "RHT3": return 6;
+            case "RLT3": return 5;
+            case "RHT4": return 4;
+            case "RLT4": return 3;
+            case "RHT5": return 2;
+            case "RLT5": return 1;
+            default: return 0;
+        }
+    }
+
+    /**
+     * Get the best tier for a username
+     */
+    public static TierInfo getBestTier(String username) {
+        OCETierPlayer player = USERNAME_CACHE.get(username.toLowerCase());
+        if (player == null) return null;
+        
+        String bestGameMode = null;
+        String bestTier = null;
+        int bestValue = -1;
+        
+        for (Map.Entry<String, GameModeTier> entry : player.gameModes().entrySet()) {
+            String gameMode = entry.getKey();
+            GameModeTier tierData = entry.getValue();
+            
+            if (tierData == null || tierData.tier() == null) continue;
+            
+            String tier = tierData.tier();
+            if (ocetiertagger.getManager().getConfig().isShowRetired() && tierData.isLT()) {
+                tier = "R" + tier;
+            }
+            
+            int value = getTierValue(tier);
+            
+            if (value > bestValue) {
+                bestValue = value;
+                bestTier = tier;
+                bestGameMode = gameMode;
+            }
+        }
+        
+        if (bestTier == null) return null;
+        return new TierInfo(bestGameMode, bestTier);
+    }
+
+    /**
+     * Get the cached player data for a username
+     */
+    public static OCETierPlayer getPlayerData(String username) {
+        return USERNAME_CACHE.get(username.toLowerCase());
     }
 }

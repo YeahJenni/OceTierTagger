@@ -17,6 +17,7 @@ public class PlayerInfo {
     int points;
     int rank;
     Map<String, Ranking> rankings;
+    boolean oceaniasStaff;
 
     public PlayerInfo(String name, Map<String, Ranking> rankings) {
         this.name = name;
@@ -25,6 +26,7 @@ public class PlayerInfo {
         this.points = 0;
         this.rank = 0;
         this.rankings = rankings;
+        this.oceaniasStaff = false;
     }
 
     public PlayerInfo(String name, String id, String region, int points, int rank, Map<String, Ranking> rankings) {
@@ -34,6 +36,17 @@ public class PlayerInfo {
         this.points = points;
         this.rank = rank;
         this.rankings = rankings;
+        this.oceaniasStaff = false;
+    }
+
+    public PlayerInfo(String name, String id, String region, int points, int rank, Map<String, Ranking> rankings, boolean oceaniasStaff) {
+        this.name = name;
+        this.id = id;
+        this.region = region;
+        this.points = points;
+        this.rank = rank;
+        this.rankings = rankings;
+        this.oceaniasStaff = oceaniasStaff;
     }
 
     public String getName() { return name; }
@@ -42,6 +55,7 @@ public class PlayerInfo {
     public int getPoints() { return points; }
     public int getRank() { return rank; }
     public Map<String, Ranking> getRankings() { return rankings; }
+    public boolean isOceaniasStaff() { return oceaniasStaff; }
 
     public String name() { return name; }
     public Map<String, Ranking> rankings() { return rankings; }

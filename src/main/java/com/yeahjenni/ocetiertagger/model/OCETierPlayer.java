@@ -11,7 +11,8 @@ public record OCETierPlayer(
     int score,
     @SerializedName("leaderboard_position") int leaderboardPosition,
     @SerializedName("last_updated") String lastUpdated,
-    @SerializedName("gameModes") Map<String, GameModeTier> gameModes
+    @SerializedName("gameModes") Map<String, GameModeTier> gameModes,
+    @SerializedName("oceaniasStaff") boolean oceaniasStaff
 ) {
     public record GameModeTier(String tier, boolean isLT) {}
 }

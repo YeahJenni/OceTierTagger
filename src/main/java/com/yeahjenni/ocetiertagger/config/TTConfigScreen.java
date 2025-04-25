@@ -35,6 +35,7 @@ public class TTConfigScreen extends TabbedConfigScreen<TierTaggerConfig> {
                     new CyclingOption<>("ocetiertagger.config.gamemode", TierCache.GAME_MODES, config.getGameMode(),
                             config::setGameMode, mode -> Text.literal(TierCache.getGameModeDisplay(mode))),
                     CyclingOption.ofBoolean("ocetiertagger.config.retired", config.isShowRetired(), config::setShowRetired),
+                    CyclingOption.ofBoolean("ocetiertagger.config.besttier", config.isShowBestTierFirst(), config::setShowBestTierFirst),
                     new CyclingOption<>("ocetiertagger.config.statistic", 
                             Arrays.asList(TierTaggerConfig.Statistic.values()),
                             config.getShownStatistic(), 

@@ -113,3 +113,6 @@ __pycache__/
 
 # JetBrains IDEs
 *.idea/
+
+# api
+api/*
