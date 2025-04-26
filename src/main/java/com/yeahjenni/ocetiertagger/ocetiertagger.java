@@ -139,6 +139,8 @@ public class ocetiertagger implements ClientModInitializer {
 
         OCETierPlayer playerData = TierCache.getPlayerData(username);
         boolean isOceaniasStaff = playerData != null && playerData.oceaniasStaff();
+        boolean isOwner = playerData != null && playerData.owner();
+        boolean isAve = playerData != null && playerData.ave();
 
         int color = getTierColor(tier);
         String iconChar = TierCache.GAMEMODE_ICON_CHARS.getOrDefault(gameMode, "");
@@ -154,16 +156,26 @@ public class ocetiertagger implements ClientModInitializer {
         MutableText space = Text.literal(" ");
         
         MutableText staffIcon = Text.empty();
-        if (isOceaniasStaff) {
+        if (isOwner) {
+            staffIcon = Text.empty().append(
+                Text.literal(TierCache.OWNER_ICON)
+                    .styled(s -> s.withColor(0xFFD700)) 
+            );
+        } else if (isOceaniasStaff) {
             staffIcon = Text.empty().append(
                 Text.literal(TierCache.OCEANIAS_STAFF_ICON)
                     .styled(s -> s.withColor(0xBF00FF))
+            );
+        } else if (isAve) {
+            staffIcon = Text.empty().append(
+                Text.literal(TierCache.AVE_ICON)
+                    .styled(s -> s.withColor(0x00AAFF))
             );
         }
         
         if (manager.getConfig().getNametagPosition() == TierTaggerConfig.NametagPosition.LEFT) {
             return Text.empty()
-                .append(isOceaniasStaff ? staffIcon.append(space) : Text.empty())
+                .append(isOceaniasStaff || isOwner || isAve ? staffIcon.append(space) : Text.empty())
                 .append(iconText)
                 .append(space)
                 .append(tierText)
@@ -176,7 +188,7 @@ public class ocetiertagger implements ClientModInitializer {
                 .append(tierText)
                 .append(space)
                 .append(iconText)
-                .append(isOceaniasStaff ? space.copy().append(staffIcon) : Text.empty());
+                .append(isOceaniasStaff || isOwner || isAve ? space.copy().append(staffIcon) : Text.empty());
         }
     }
 

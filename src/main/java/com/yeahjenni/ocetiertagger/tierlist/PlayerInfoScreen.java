@@ -94,15 +94,29 @@ public class PlayerInfoScreen extends CloseableScreen {
         String name = this.info == null ? this.player : this.info.getName();
         
         boolean isOceaniasStaff = false;
+        boolean isOwner = false;
+        boolean isAve = false;
         if (this.info != null) {
             isOceaniasStaff = this.info.isOceaniasStaff();
+            isOwner = this.info.isOwner();
+            isAve = this.info.isAve();
         }
         
         MutableText nameText = Text.literal(name + "'s profile");
         
-        if (isOceaniasStaff) {
+        if (isOwner) {
+            nameText = Text.literal(TierCache.OWNER_ICON)
+                .styled(s -> s.withColor(0xFFD700))
+                .append(" ")
+                .append(nameText);
+        } else if (isOceaniasStaff) {
             nameText = Text.literal(TierCache.OCEANIAS_STAFF_ICON)
                 .styled(s -> s.withColor(0xBF00FF))
+                .append(" ")
+                .append(nameText);
+        } else if (isAve) {
+            nameText = Text.literal(TierCache.AVE_ICON)
+                .styled(s -> s.withColor(0x00AAFF))
                 .append(" ")
                 .append(nameText);
         }

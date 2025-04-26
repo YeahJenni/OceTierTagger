@@ -18,6 +18,8 @@ public class PlayerInfo {
     int rank;
     Map<String, Ranking> rankings;
     boolean oceaniasStaff;
+    boolean owner;
+    boolean ave;
 
     public PlayerInfo(String name, Map<String, Ranking> rankings) {
         this.name = name;
@@ -27,6 +29,8 @@ public class PlayerInfo {
         this.rank = 0;
         this.rankings = rankings;
         this.oceaniasStaff = false;
+        this.owner = false;
+        this.ave = false;
     }
 
     public PlayerInfo(String name, String id, String region, int points, int rank, Map<String, Ranking> rankings) {
@@ -37,6 +41,8 @@ public class PlayerInfo {
         this.rank = rank;
         this.rankings = rankings;
         this.oceaniasStaff = false;
+        this.owner = false;
+        this.ave = false;
     }
 
     public PlayerInfo(String name, String id, String region, int points, int rank, Map<String, Ranking> rankings, boolean oceaniasStaff) {
@@ -47,6 +53,34 @@ public class PlayerInfo {
         this.rank = rank;
         this.rankings = rankings;
         this.oceaniasStaff = oceaniasStaff;
+        this.owner = false;
+        this.ave = false;
+    }
+
+    public PlayerInfo(String name, String id, String region, int points, int rank, 
+                      Map<String, Ranking> rankings, boolean oceaniasStaff, boolean owner) {
+        this.name = name;
+        this.id = id;
+        this.region = region;
+        this.points = points;
+        this.rank = rank;
+        this.rankings = rankings;
+        this.oceaniasStaff = oceaniasStaff;
+        this.owner = owner;
+        this.ave = false;
+    }
+
+    public PlayerInfo(String name, String id, String region, int points, int rank, 
+                      Map<String, Ranking> rankings, boolean oceaniasStaff, boolean owner, boolean ave) {
+        this.name = name;
+        this.id = id;
+        this.region = region;
+        this.points = points;
+        this.rank = rank;
+        this.rankings = rankings;
+        this.oceaniasStaff = oceaniasStaff;
+        this.owner = owner;
+        this.ave = ave;
     }
 
     public String getName() { return name; }
@@ -56,6 +90,8 @@ public class PlayerInfo {
     public int getRank() { return rank; }
     public Map<String, Ranking> getRankings() { return rankings; }
     public boolean isOceaniasStaff() { return oceaniasStaff; }
+    public boolean isOwner() { return owner; }
+    public boolean isAve() { return ave; }
 
     public String name() { return name; }
     public Map<String, Ranking> rankings() { return rankings; }

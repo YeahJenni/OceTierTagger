@@ -31,7 +31,7 @@ public class TierCache {
     private static final Map<String, CompletableFuture<OCETierPlayer>> PENDING_REQUESTS = new ConcurrentHashMap<>();
 
     private static final OCETierPlayer NOT_FOUND_PLACEHOLDER = new OCETierPlayer(
-        "not-found", "not-found", 0, 0, "", Collections.emptyMap(), false
+        "not-found", "not-found", 0, 0, "", Collections.emptyMap(), false, false, false
     );
 
     public static final List<String> GAME_MODES = Arrays.asList(
@@ -67,6 +67,8 @@ public class TierCache {
     );
 
     public static final String OCEANIAS_STAFF_ICON = "\u2604"; 
+    public static final String OWNER_ICON = "\uD83D\uDC51"; 
+    public static final String AVE_ICON = "\uE00B";
 
     /**
      * Fetch player data from the API by username
@@ -184,7 +186,9 @@ public class TierCache {
                 player.score(),
                 player.leaderboardPosition(),
                 rankings,
-                player.oceaniasStaff()
+                player.oceaniasStaff(),
+                player.owner(),
+                player.ave()
             );
         });
     }
