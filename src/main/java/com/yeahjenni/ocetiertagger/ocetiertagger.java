@@ -71,6 +71,8 @@ public class ocetiertagger implements ClientModInitializer {
 
     private static int tickCounter = 0;
 
+    private static TierTaggerConfig.TierlistSource lastTierlistSource = TierTaggerConfig.TierlistSource.OCETIERS;
+
     @Override
     public void onInitializeClient() {
         TierCache.clearCache();
@@ -96,6 +98,13 @@ public class ocetiertagger implements ClientModInitializer {
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            TierTaggerConfig config = manager.getConfig();
+            if (config.getTierlistSource() != lastTierlistSource) {
+                TierCache.clearCache();
+                lastTierlistSource = config.getTierlistSource();
+                logger.info("Tierlist source changed to {}, cache cleared", lastTierlistSource);
+            }
+
             tickCounter++;
 
             if (client.world != null && client.player != null && tickCounter % 200 == 0) {

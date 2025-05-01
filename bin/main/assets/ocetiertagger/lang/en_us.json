@@ -11,6 +11,8 @@
   "ocetiertagger.config.search": "Search Player",
   "ocetiertagger.config.icons": "Show Gamemode Icons",
   "ocetiertagger.config.nametagposition": "Tier Position",
+  "ocetiertagger.config.besttier": "Show Best Tier First",
+  "ocetiertagger.config.tierlistsource": "Tierlist",
   "ocetiertagger.colors": "Tier Colors",
   "ocetiertagger.colors.retired": "Retired",
   "ocetiertagger.search": "Search",

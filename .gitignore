@@ -116,3 +116,4 @@ __pycache__/
 
 # api
 api/*
+bin/*

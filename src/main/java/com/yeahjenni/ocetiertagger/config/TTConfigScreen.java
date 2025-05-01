@@ -46,6 +46,11 @@ public class TTConfigScreen extends TabbedConfigScreen<TierTaggerConfig> {
                             config.getNametagPosition(),
                             config::setNametagPosition,
                             pos -> Text.literal(pos.name())),
+                    new CyclingOption<>("ocetiertagger.config.tierlistsource",
+                            Arrays.asList(TierTaggerConfig.TierlistSource.values()),
+                            config.getTierlistSource(),
+                            config::setTierlistSource,
+                            e -> Text.literal(e.getDisplayName())),
                     new SimpleButton("ocetiertagger.clear", b -> TierCache.clearCache()),
                     new ScreenOpenButton("ocetiertagger.config.search", PlayerSearchScreen::new)
             };

@@ -7,6 +7,7 @@ import com.yeahjenni.ocetiertagger.model.PlayerInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.client.MinecraftClient;
+import com.yeahjenni.ocetiertagger.config.TierTaggerConfig;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -20,7 +21,7 @@ import java.util.Map;
 import static java.util.Map.entry;
 
 public class TierCache {
-    private static final String API_BASE_URL = "https://api.yeahjenni.xyz/ocetiers/player/";
+    private static final String API_BASE_URL_FORMAT = "https://api.yeahjenni.xyz/%s/player/";
     private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
     private static final Gson GSON = new GsonBuilder().create();
 
@@ -71,6 +72,15 @@ public class TierCache {
     public static final String AVE_ICON = "\uE00B";
 
     /**
+     * Gets the base API URL based on current config settings
+     */
+    private static String getApiBaseUrl() {
+        TierTaggerConfig config = ocetiertagger.getManager().getConfig();
+        return String.format(API_BASE_URL_FORMAT, 
+                config.getTierlistSource().getApiPath());
+    }
+
+    /**
      * Fetch player data from the API by username
      */
     public static CompletableFuture<OCETierPlayer> fetchPlayerByUsername(String username) {
@@ -92,7 +102,7 @@ public class TierCache {
         PENDING_REQUESTS.put(lowerUsername, future);
 
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(API_BASE_URL + username))
+            .uri(URI.create(getApiBaseUrl() + username))
             .GET()
             .build();
 

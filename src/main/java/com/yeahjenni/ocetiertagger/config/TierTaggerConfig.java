@@ -19,6 +19,7 @@ public class TierTaggerConfig implements Serializable, IConfig {
     private NametagPosition nametagPosition = NametagPosition.LEFT;
     private int retiredColor = 0xa2d6ff;
     private LinkedTreeMap<String, Integer> tierColors = defaultColors();
+    private TierlistSource tierlistSource = TierlistSource.OCETIERS;
     
     public boolean isEnabled() {
         return enabled;
@@ -83,6 +84,14 @@ public class TierTaggerConfig implements Serializable, IConfig {
         return tierColors;
     }
     
+    public TierlistSource getTierlistSource() {
+        return tierlistSource;
+    }
+    
+    public void setTierlistSource(TierlistSource tierlistSource) {
+        this.tierlistSource = tierlistSource;
+    }
+    
     private static LinkedTreeMap<String, Integer> defaultColors() {
         LinkedTreeMap<String, Integer> colors = new LinkedTreeMap<>();
         colors.put("LT1", 0xFF000080); 
@@ -107,5 +116,24 @@ public class TierTaggerConfig implements Serializable, IConfig {
     public enum NametagPosition {
         LEFT,
         RIGHT
+    }
+    
+    public enum TierlistSource {
+        OCETIERS("ocetiers.com"),
+        MCTIERS("mctiers.com");
+        
+        private final String displayName;
+        
+        TierlistSource(String displayName) {
+            this.displayName = displayName;
+        }
+        
+        public String getDisplayName() {
+            return displayName;
+        }
+        
+        public String getApiPath() {
+            return name().toLowerCase();
+        }
     }
 }

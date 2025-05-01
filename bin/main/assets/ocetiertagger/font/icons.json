@@ -72,6 +72,13 @@
       },
       {
         "type": "bitmap",
+        "file": "ocetiertagger:font/ave.png",
+        "height": 8,
+        "ascent": 7,
+        "chars": ["\uE00B"]
+      },
+      {
+        "type": "bitmap",
         "file": "minecraft:font/ascii.png", 
         "ascent": 7,
         "chars": [

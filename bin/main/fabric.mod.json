@@ -12,7 +12,7 @@
   "icon": "assets/ocetiertagger/icon.png",
   "environment": "client",
   "entrypoints": {
-    "main": [
+    "client": [
       "com.yeahjenni.ocetiertagger.ocetiertagger"
     ],
     "ukulib": [
