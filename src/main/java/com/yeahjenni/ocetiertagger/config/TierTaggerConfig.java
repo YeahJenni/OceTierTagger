@@ -120,7 +120,8 @@ public class TierTaggerConfig implements Serializable, IConfig {
     
     public enum TierlistSource {
         OCETIERS("ocetiers.com"),
-        MCTIERS("mctiers.com");
+        MCTIERS("mctiers.com"),
+        MCTIERSIO("mctiers.io");
         
         private final String displayName;
         
