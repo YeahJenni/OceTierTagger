@@ -161,6 +161,11 @@ public class ocetiertagger implements ClientModInitializer {
         MutableText tierText = Text.literal(tier)
             .styled(style -> style.withColor(color));
         
+        if (manager.getConfig().isShowLeaderboardPosition() && playerData != null && playerData.leaderboardPosition() > 0) {
+            tierText = tierText.append(Text.literal(" #" + playerData.leaderboardPosition())
+                .styled(style -> style.withColor(0xAAAAAA))); 
+        }
+        
         MutableText divider = Text.literal(" | ");
         MutableText space = Text.literal(" ");
         

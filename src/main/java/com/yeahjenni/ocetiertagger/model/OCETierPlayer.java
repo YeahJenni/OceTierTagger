@@ -9,7 +9,7 @@ public record OCETierPlayer(
     String id,
     String username,
     int score,
-    @SerializedName("leaderboard_position") int leaderboardPosition,
+    @SerializedName(value = "leaderboard_position", alternate = {"leaderboardPosition"}) int leaderboardPosition,
     @SerializedName("last_updated") String lastUpdated,
     @SerializedName("gameModes") Map<String, GameModeTier> gameModes,
     @SerializedName("oceaniasStaff") boolean oceaniasStaff,

@@ -4,6 +4,7 @@ import com.yeahjenni.ocetiertagger.model.GameMode;
 import com.yeahjenni.ocetiertagger.model.OCETierPlayer;
 import com.yeahjenni.ocetiertagger.model.OCETierPlayer.GameModeTier;
 import com.yeahjenni.ocetiertagger.model.PlayerInfo;
+import com.yeahjenni.ocetiertagger.debug.DebugLogger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.client.MinecraftClient;
@@ -76,8 +77,8 @@ public class TierCache {
      */
     private static String getApiBaseUrl() {
         TierTaggerConfig config = ocetiertagger.getManager().getConfig();
-        return String.format(API_BASE_URL_FORMAT, 
-                config.getTierlistSource().getApiPath());
+        String domain = config.isUseDevApi() ? "dev.yeahjenni.xyz" : "api.yeahjenni.xyz";
+        return String.format("https://%s/%s/player/", domain, config.getTierlistSource().getApiPath());
     }
 
     /**
@@ -101,25 +102,34 @@ public class TierCache {
         CompletableFuture<OCETierPlayer> future = new CompletableFuture<>();
         PENDING_REQUESTS.put(lowerUsername, future);
 
+        String apiUrl = getApiBaseUrl() + username;
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(getApiBaseUrl() + username))
+            .uri(URI.create(apiUrl))
             .GET()
             .build();
 
+        if (ocetiertagger.getManager().getConfig().isDebugMode()) {
+            DebugLogger.logApiRequest(apiUrl, "GET", null);
+        }
+
         return HTTP_CLIENT.sendAsync(request, HttpResponse.BodyHandlers.ofString())
             .thenApply(response -> {
-                if (response.statusCode() == 200) {
-                    String responseBody = response.body();
-                    ocetiertagger.getLogger().info("API Response for {}: {}", username, responseBody); 
-
+                int statusCode = response.statusCode();
+                String responseBody = response.body();
+                
+                if (ocetiertagger.getManager().getConfig().isDebugMode()) {
+                    DebugLogger.logApiResponse(apiUrl, statusCode, responseBody);
+                }
+                
+                if (statusCode == 200) {
                     OCETierPlayer player = GSON.fromJson(responseBody, OCETierPlayer.class);
                     USERNAME_CACHE.put(lowerUsername, player);
                     return player;
-                } else if (response.statusCode() == 404) {
+                } else if (statusCode == 404) {
                     NOT_FOUND_PLAYERS.add(lowerUsername);
                     return NOT_FOUND_PLACEHOLDER;
                 } else {
-                    throw new RuntimeException("Unexpected response code: " + response.statusCode());
+                    throw new RuntimeException("Unexpected response code: " + statusCode);
                 }
             })
             .whenComplete((result, error) -> {
@@ -217,6 +227,51 @@ public class TierCache {
         USERNAME_CACHE.clear();
         NOT_FOUND_PLAYERS.clear();
         PENDING_REQUESTS.clear();
+    }
+
+    /**
+     * Get the number of cached players
+     */
+    public static int getCachedPlayerCount() {
+        return USERNAME_CACHE.size();
+    }
+
+    /**
+     * Get the number of not found players
+     */
+    public static int getNotFoundCount() {
+        return NOT_FOUND_PLAYERS.size();
+    }
+
+    /**
+     * Get the number of pending requests
+     */
+    public static int getPendingRequestsCount() {
+        return PENDING_REQUESTS.size();
+    }
+
+    /**
+     * Dump cached player data for debugging
+     */
+    public static Map<String, OCETierPlayer> dumpCachedPlayers() {
+        return new HashMap<>(USERNAME_CACHE);
+    }
+
+    /**
+     * Dump not found players for debugging
+     */
+    public static Set<String> dumpNotFoundPlayers() {
+        return new HashSet<>(NOT_FOUND_PLAYERS);
+    }
+
+    /**
+     * Force clear all cached data completely, including not found players
+     */
+    public static void forceClearAllCache() {
+        USERNAME_CACHE.clear();
+        NOT_FOUND_PLAYERS.clear();
+        PENDING_REQUESTS.clear();
+        ocetiertagger.getLogger().info("Force cleared all cache data including not found players");
     }
 
     /**

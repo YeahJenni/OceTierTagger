@@ -208,10 +208,10 @@ public class PlayerInfoScreen extends CloseableScreen {
 
     private Text getRankText(PlayerInfo info) {
         int color = switch (info.getOverall()) {
-            case 1 -> 0xe5ba43;
-            case 2 -> 0x808c9c;
-            case 3 -> 0xb56326;
-            default -> 0x1e2634;
+            case 1 -> 0xe5ba43;  
+            case 2 -> 0x808c9c; 
+            case 3 -> 0xb56326;  
+            default -> 0x1e2634; 
         };
 
         return Text.empty()

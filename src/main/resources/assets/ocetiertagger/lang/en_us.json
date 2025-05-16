@@ -13,6 +13,9 @@
   "ocetiertagger.config.nametagposition": "Tier Position",
   "ocetiertagger.config.besttier": "Show Best Tier First",
   "ocetiertagger.config.tierlistsource": "Tierlist",
+  "ocetiertagger.config.showleaderboard": "Show Leaderboard Position",
+  "ocetiertagger.config.showleaderboard.description": "Show player's global leaderboard position next to their tier",
+  "ocetiertagger.config.debug.mode": "Debug Mode",
   "ocetiertagger.colors": "Tier Colors",
   "ocetiertagger.colors.retired": "Retired",
   "ocetiertagger.search": "Search",
@@ -29,5 +32,11 @@
   "ocetiertagger.outdated.ignore": "§4Ignore (not recommended)",
   "ocetiertagger.obsolete.title": "§c§lObsolete Minecraft version detected !!!",
   "ocetiertagger.obsolete.desc": "You are playing on an §nunsupported Minecraft version.§r\nThis version is likely broken, and you should consider upgrading your Minecraft as soon as possible.",
-  "ocetiertagger.keybind.gamemode": "Cycle between gamemodes"
+  "ocetiertagger.keybind.gamemode": "Cycle between gamemodes",
+  "ocetiertagger.debug": "Debug Settings",
+  "ocetiertagger.debug.use_dev_api": "Use Dev API",
+  "ocetiertagger.debug.clear_logs": "Clear Debug Logs",
+  "ocetiertagger.debug.open_logs_folder": "Open Logs Folder",
+  "ocetiertagger.debug.dump_cache": "Dump Cache Data",
+  "ocetiertagger.debug.force_clear": "Force Clear All Cache"
 }

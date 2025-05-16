@@ -16,10 +16,14 @@ public class TierTaggerConfig implements Serializable, IConfig {
     private boolean showHighestTier = false; 
     private Statistic shownStatistic = Statistic.TIER;
     private boolean showBestTierFirst = false;
+    private boolean showLeaderboardPosition = false; 
     private NametagPosition nametagPosition = NametagPosition.LEFT;
     private int retiredColor = 0xa2d6ff;
     private LinkedTreeMap<String, Integer> tierColors = defaultColors();
     private TierlistSource tierlistSource = TierlistSource.OCETIERS;
+    
+    private boolean debugMode = false;
+    private boolean useDevApi = false;
     
     public boolean isEnabled() {
         return enabled;
@@ -90,6 +94,30 @@ public class TierTaggerConfig implements Serializable, IConfig {
     
     public void setTierlistSource(TierlistSource tierlistSource) {
         this.tierlistSource = tierlistSource;
+    }
+    
+    public boolean isShowLeaderboardPosition() {
+        return showLeaderboardPosition;
+    }
+    
+    public void setShowLeaderboardPosition(boolean showLeaderboardPosition) {
+        this.showLeaderboardPosition = showLeaderboardPosition;
+    }
+    
+    public boolean isDebugMode() {
+        return debugMode;
+    }
+    
+    public void setDebugMode(boolean debugMode) {
+        this.debugMode = debugMode;
+    }
+    
+    public boolean isUseDevApi() {
+        return useDevApi;
+    }
+    
+    public void setUseDevApi(boolean useDevApi) {
+        this.useDevApi = useDevApi;
     }
     
     private static LinkedTreeMap<String, Integer> defaultColors() {
