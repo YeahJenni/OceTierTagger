@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "ocetiertagger",
+  "id": "tiersplus",
   "version": "${version}",
-  "name": "OceTierTagger",
-  "description": "Display player's PvP Tiers in their nametag!",
+  "name": "TiersPlus",
+  "description": "oh yeah im tiersplusing it!",
   "authors": ["YeahJenni" , "uku & netiyiy (the og mod)"],
   "contact": {
-    "sources": "https://github.com/YeahJenni/ocetiertagger.git"
+    "sources": "https://github.com/YeahJenni/tiersplus.git"
   },
   "license": "MPL-2.0",
   "icon": "assets/ocetiertagger/icon.png",

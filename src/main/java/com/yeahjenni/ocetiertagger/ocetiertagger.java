@@ -79,7 +79,7 @@ public class ocetiertagger implements ClientModInitializer {
 
         net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents.CLIENT_STOPPING.register(client -> {
             TierCache.clearCache();
-            logger.info("ocetiertagger cache cleared on game exit");
+            logger.info("tiersplus cache cleared on game exit");
         });
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registry) -> dispatcher.register(
