@@ -8,7 +8,7 @@ Requests to api.yeahjenni.xyz should follow the format below:
 api.yeahjenni.xyz/ocetiers/player/yeahjenni
 
 ```api.yeahjenni.xyz``` - API endpoint, ```dev.yeahjenni.xyz``` can also be used  
-```/ocetiers``` - The tierlist to be used. Current options are: `ocetiers` for ocetiers.net, `mctiers` for mctiers.com, and `mctiersio` for mctiers.net  
+```/ocetiers``` - The tierlist to be used. Current options are: `ocetiers` for ocetiers.net, `mctiers` for mctiers.com, and `mctiersio` for mctiers.io  
 ```/player``` - Just defines that a player is being searched up  
 ```/yeahjenni``` - The player being looked up, whoevers IGN would go here. Below is the data the API would return:  
 
